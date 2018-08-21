@@ -7,13 +7,31 @@ class ArticlesController < ApplicationController
         @article = Article.find(params[:id])
     end
 
+    def new
+        @article = Article.new
+    end
+
     def create
         # render plain: params[:article].inspect  <--This will show params in plain text on the page.
 
         @article = Article.new(article_params)
+ 
+        if @article.save
+          redirect_to @article
+        else
+          render 'new'
+        end
+    end
 
-        @article.save 
-        redirect_to @article
+    def update
+
+        @article = Article.find(params[:id])
+       
+        if @article.update(article_params)
+          redirect_to @article
+        else
+          render 'Edit'
+        end
     end
 
     private
@@ -21,6 +39,5 @@ class ArticlesController < ApplicationController
         params.require(:article).permit(:title, :text)
     end
 
-    def new
-    end
+
 end

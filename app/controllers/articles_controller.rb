@@ -11,6 +11,10 @@ class ArticlesController < ApplicationController
         @article = Article.new
     end
 
+    def edit
+        @article = Article.find(params[:id])
+    end
+
     def create
         # render plain: params[:article].inspect  <--This will show params in plain text on the page.
 
@@ -30,7 +34,7 @@ class ArticlesController < ApplicationController
         if @article.update(article_params)
           redirect_to @article
         else
-          render 'Edit'
+          render 'edit'
         end
     end
 
